@@ -431,6 +431,7 @@
                 <div class="api-key-form">
                     <input type="text" id="api-key" placeholder="أدخل مفتاح API الخاص بك هنا...">
                     <button class="btn" id="save-api-key">حفظ</button>
+                    <button class="btn" id="youtube-link" style="margin-right: 10px;">طريقة جلب API</button>
                 </div>
                 <div class="api-key-status" id="api-key-status"></div>
             </div>
@@ -544,6 +545,10 @@
         });
 
         // حفظ مفتاح API
+        document.getElementById('youtube-link').addEventListener('click', () => {
+            window.open('https://youtu.be/Sl_LOrTMAj0', '_blank');
+        });
+
         document.getElementById('save-api-key').addEventListener('click', () => {
             const apiKey = document.getElementById('api-key').value.trim();
             const statusElement = document.getElementById('api-key-status');
