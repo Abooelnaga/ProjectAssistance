@@ -91,26 +91,56 @@ logosContainer.addEventListener('click', (e) => {
 function downloadSearchImage(url, source) {
     // إنشاء عنصر رابط مؤقت
     const link = document.createElement('a');
+
+    // تنظيف الرابط من أي معلمات استعلام
+    if (url) {
+        url = url.split('?')[0];
+    } else {
+        console.error('رابط الصورة غير صالح');
+        return;
+    }
+
     link.href = url;
 
-    // استخراج اسم الملف من الرابط
-    const fileName = url.split('/').pop();
-    link.download = `${source}_${fileName}`;
+    // استخراج اسم الملف من الرابط أو استخدام اسم افتراضي
+    let fileName;
+    try {
+        fileName = url.split('/').pop() || 'image.jpg';
+    } catch (e) {
+        fileName = 'image.jpg';
+    }
+
+    // إضافة مصدر الصورة إلى اسم الملف
+    link.download = `${source || 'image'}_${fileName}`;
 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
 
-// إضافة مستمع للنقر على زر التنزيل في صفحث عن الصور
+// إضافة مستمع للنقر على زر التنزيل في صفحة البحث عن الصور
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('download-btn') && document.querySelector('.image-search-section')) {
         e.preventDefault();
 
         const imageCard = e.target.closest('.image-card');
         if (imageCard) {
-            const imageUrl = imageCard.querySelector('img').src;
+            // الحصول على الصورة الأصلية من السمة data-original-url إذا كانت متوفرة
+            const originalUrl = e.target.getAttribute('data-original-url');
+            const thumbnailUrl = e.target.getAttribute('data-thumbnail');
+
+            // استخدام الصورة الأصلية إذا كانت متوفرة، وإلا استخدم الصورة المصغرة
+            let imageUrl;
+            if (originalUrl && originalUrl !== '#') {
+                imageUrl = originalUrl;
+            } else if (thumbnailUrl) {
+                imageUrl = thumbnailUrl;
+            } else {
+                imageUrl = imageCard.querySelector('img').src;
+            }
+
             const source = imageCard.querySelector('.image-source').textContent;
+            console.log('تنزيل الصورة:', imageUrl);
             downloadSearchImage(imageUrl, source);
         }
     }
