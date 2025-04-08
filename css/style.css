@@ -1,4 +1,4 @@
-/* تنسيقات عامة */
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    background-color: #f9fafb;
-    color: #334155;
+    background-color: #f3f4f6;
+    color: #1f2937;
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -25,12 +25,12 @@ body {
 
 a {
     text-decoration: none;
-    color: #0ea5e9;
+    color: #3b82f6;
     transition: all 0.3s ease;
 }
 
 a:hover {
-    color: #0284c7;
+    color: #2563eb;
 }
 
 ul {
@@ -39,23 +39,22 @@ ul {
 
 .btn {
     display: inline-block;
-    background-color: #0ea5e9;
+    background-color: #3b82f6;
     color: #ffffff;
     padding: 12px 28px;
     border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2);
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
 }
 
 .btn:hover {
-    background-color: #0284c7;
-    color: #ffffff;
+    background-color: #2563eb;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(2, 132, 199, 0.3);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* تنسيق الهيدر */
+/* Header Styles */
 header {
     background-color: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -73,10 +72,10 @@ header .container {
 }
 
 .logo h1 {
-    color: #0ea5e9;
+    color: #3b82f6;
     font-size: 1.8rem;
     font-weight: 700;
-    text-shadow: 0 1px 2px rgba(14, 165, 233, 0.1);
+    text-shadow: 0 1px 2px rgba(59, 130, 246, 0.1);
 }
 
 nav ul {
@@ -92,7 +91,7 @@ nav ul li:last-child {
 }
 
 nav ul li a {
-    color: #64748b;
+    color: #6b7280;
     font-weight: 500;
     padding: 8px 15px;
     border-radius: 8px;
@@ -101,13 +100,13 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: #0ea5e9;
-    background-color: rgba(14, 165, 233, 0.08);
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.08);
 }
 
-/* تنسيق قسم الهيرو */
+/* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
     padding: 80px 0;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -123,14 +122,14 @@ nav ul li a.active {
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.3;
-    color: #0c4a6e;
+    color: #1e3a8a;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .hero-content p {
     font-size: 1.2rem;
     margin-bottom: 30px;
-    color: #334155;
+    color: #1f2937;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -142,16 +141,12 @@ nav ul li a.active {
     margin-top: 20px;
 }
 
-/* تنسيق قسم الشعارات */
-.logos-section {
-    padding: 80px 0;
-}
-
+/* Section Titles */
 .section-title {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 15px;
-    color: #0c4a6e;
+    color: #1e3a8a;
     font-weight: 700;
 }
 
@@ -159,8 +154,13 @@ nav ul li a.active {
     text-align: center;
     max-width: 700px;
     margin: 0 auto 40px;
-    color: #64748b;
+    color: #6b7280;
     font-size: 1.1rem;
+}
+
+/* Logos Section */
+.logos-section {
+    padding: 80px 0;
 }
 
 .logos-filter {
@@ -171,7 +171,7 @@ nav ul li a.active {
 }
 
 .filter-btn {
-    background-color: #f1f5f9;
+    background-color: #f3f4f6;
     border: none;
     padding: 10px 22px;
     margin: 0 5px 10px;
@@ -180,16 +180,16 @@ nav ul li a.active {
     font-family: 'Tajawal', sans-serif;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    color: #64748b;
+    color: #6b7280;
     font-weight: 500;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background-color: #0ea5e9;
+    background-color: #3b82f6;
     color: #ffffff;
-    box-shadow: 0 3px 6px rgba(14, 165, 233, 0.2);
+    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.2);
 }
 
 .logos-container {
@@ -212,8 +212,8 @@ nav ul li a.active {
 
 .logo-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.15);
-    border-color: rgba(14, 165, 233, 0.2);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.2);
 }
 
 .logo-img {
@@ -226,34 +226,33 @@ nav ul li a.active {
 .logo-name {
     font-weight: 500;
     margin-bottom: 10px;
-    color: #334155;
+    color: #1f2937;
 }
 
 .download-btn {
     display: inline-block;
-    background-color: #0ea5e9;
+    background-color: #3b82f6;
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 8px;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.15);
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.15);
     font-weight: 600;
     border: none;
     cursor: pointer;
 }
 
 .download-btn:hover {
-    background-color: #0284c7;
-    color: #ffffff;
+    background-color: #2563eb;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(2, 132, 199, 0.3);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
 }
 
-/* تنسيق قسم الأدوات */
+/* Tools Section */
 .tools-section {
     padding: 80px 0;
-    background-color: #f0f9ff;
+    background-color: #e0f2fe;
 }
 
 .tools-container {
@@ -275,25 +274,25 @@ nav ul li a.active {
 
 .tool-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(14, 165, 233, 0.15);
-    border-color: rgba(14, 165, 233, 0.1);
+    box-shadow: 0 12px 25px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.1);
 }
 
 .tool-icon {
     font-size: 3rem;
     margin-bottom: 20px;
-    color: #0ea5e9;
+    color: #3b82f6;
 }
 
 .tool-title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 15px;
-    color: #0c4a6e;
+    color: #1e3a8a;
 }
 
 .tool-desc {
-    color: #64748b;
+    color: #6b7280;
     margin-bottom: 25px;
     line-height: 1.6;
 }
@@ -302,10 +301,10 @@ nav ul li a.active {
     margin-top: 10px;
 }
 
-/* تنسيق الفوتر */
+/* Footer Styles */
 footer {
-    background-color: #0c4a6e;
-    color: #f0f9ff;
+    background-color: #1e3a8a;
+    color: #e0f2fe;
     padding: 25px 0;
     text-align: center;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -330,7 +329,7 @@ footer p {
     color: #bae6fd;
 }
 
-/* تجاوب الموقع مع الشاشات المختلفة */
+/* Responsive Design */
 @media (max-width: 992px) {
     .container {
         width: 95%;
