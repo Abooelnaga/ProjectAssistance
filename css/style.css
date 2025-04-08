@@ -10,8 +10,9 @@ body {
     background-color: #f8fafc;
     color: #1e293b;
     line-height: 1.6;
-    padding-bottom: 80px;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     position: relative;
 }
 
@@ -24,12 +25,12 @@ body {
 
 a {
     text-decoration: none;
-    color: #4361ee;
+    color: #2563eb;
     transition: all 0.3s ease;
 }
 
 a:hover {
-    color: #3a0ca3;
+    color: #1e40af;
 }
 
 ul {
@@ -38,20 +39,20 @@ ul {
 
 .btn {
     display: inline-block;
-    background-color: #4361ee;
+    background-color: #2563eb;
     color: #ffffff;
     padding: 12px 28px;
     border-radius: 6px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(67, 97, 238, 0.15);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.15);
 }
 
 .btn:hover {
-    background-color: #3a0ca3;
+    background-color: #1e40af;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(58, 12, 163, 0.2);
+    box-shadow: 0 6px 8px rgba(30, 64, 175, 0.2);
 }
 
 /* تنسيق الهيدر */
@@ -72,10 +73,10 @@ header .container {
 }
 
 .logo h1 {
-    color: #4361ee;
+    color: #2563eb;
     font-size: 1.8rem;
     font-weight: 700;
-    text-shadow: 0 1px 2px rgba(67, 97, 238, 0.1);
+    text-shadow: 0 1px 2px rgba(37, 99, 235, 0.1);
 }
 
 nav ul {
@@ -100,13 +101,13 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: #4361ee;
-    background-color: rgba(67, 97, 238, 0.08);
+    color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.08);
 }
 
 /* تنسيق قسم الهيرو */
 .hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
     padding: 80px 0;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -186,9 +187,9 @@ nav ul li a.active {
 
 .filter-btn:hover,
 .filter-btn.active {
-    background-color: #4361ee;
+    background-color: #2563eb;
     color: #ffffff;
-    box-shadow: 0 3px 6px rgba(67, 97, 238, 0.2);
+    box-shadow: 0 3px 6px rgba(37, 99, 235, 0.2);
 }
 
 .logos-container {
@@ -228,23 +229,23 @@ nav ul li a.active {
 
 .download-btn {
     display: inline-block;
-    background-color: #4361ee;
+    background-color: #2563eb;
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 6px;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(67, 97, 238, 0.15);
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.15);
     font-weight: 600;
     border: none;
     cursor: pointer;
 }
 
 .download-btn:hover {
-    background-color: #3a0ca3;
+    background-color: #1e40af;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(58, 12, 163, 0.2);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
 }
 
 /* تنسيق قسم الأدوات */
@@ -298,15 +299,15 @@ nav ul li a.active {
 
 /* تنسيق الفوتر */
 footer {
-    background-color: #1a365d;
+    background-color: #1e3a8a;
     color: #ffffff;
     padding: 25px 0;
     text-align: center;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0;
+    margin-top: auto;
     width: 100%;
     z-index: 100;
+    position: relative;
 }
 
 footer p {
@@ -315,13 +316,13 @@ footer p {
 }
 
 .developer {
-    color: #7209b7;
+    color: #93c5fd;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .developer:hover {
-    color: #4361ee;
+    color: #dbeafe;
 }
 
 /* تجاوب الموقع مع الشاشات المختلفة */
@@ -354,9 +355,9 @@ footer p {
     }
 
     .hero {
-        padding: 80px 0;
+        padding: 60px 0;
         height: auto;
-        min-height: 60vh;
+        min-height: auto;
     }
 
     .hero h2 {
@@ -388,6 +389,11 @@ footer p {
     .results-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
+
+    footer {
+        position: relative;
+        padding: 20px 0;
+    }
 }
 
 @media (max-width: 576px) {
@@ -397,7 +403,7 @@ footer p {
     }
 
     .hero {
-        padding: 60px 0;
+        padding: 40px 0;
     }
 
     .hero h2 {
@@ -452,6 +458,14 @@ footer p {
     .download-btn {
         padding: 6px 12px;
         font-size: 0.85rem;
+    }
+
+    footer {
+        padding: 15px 0;
+    }
+
+    footer p {
+        font-size: 0.9rem;
     }
 }
 
