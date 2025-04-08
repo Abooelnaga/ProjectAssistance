@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    background-color: #f8fafc;
-    color: #1e293b;
+    background-color: #f9fafb;
+    color: #334155;
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -25,12 +25,12 @@ body {
 
 a {
     text-decoration: none;
-    color: #2563eb;
+    color: #0ea5e9;
     transition: all 0.3s ease;
 }
 
 a:hover {
-    color: #1e40af;
+    color: #0284c7;
 }
 
 ul {
@@ -39,20 +39,20 @@ ul {
 
 .btn {
     display: inline-block;
-    background-color: #2563eb;
+    background-color: #0ea5e9;
     color: #ffffff;
     padding: 12px 28px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2);
 }
 
 .btn:hover {
-    background-color: #1e40af;
+    background-color: #0284c7;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(30, 64, 175, 0.2);
+    box-shadow: 0 6px 12px rgba(2, 132, 199, 0.3);
 }
 
 /* تنسيق الهيدر */
@@ -73,10 +73,10 @@ header .container {
 }
 
 .logo h1 {
-    color: #2563eb;
+    color: #0ea5e9;
     font-size: 1.8rem;
     font-weight: 700;
-    text-shadow: 0 1px 2px rgba(37, 99, 235, 0.1);
+    text-shadow: 0 1px 2px rgba(14, 165, 233, 0.1);
 }
 
 nav ul {
@@ -92,22 +92,22 @@ nav ul li:last-child {
 }
 
 nav ul li a {
-    color: #4b5563;
+    color: #64748b;
     font-weight: 500;
     padding: 8px 15px;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: #2563eb;
-    background-color: rgba(37, 99, 235, 0.08);
+    color: #0ea5e9;
+    background-color: rgba(14, 165, 233, 0.08);
 }
 
 /* تنسيق قسم الهيرو */
 .hero {
-    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+    background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
     padding: 80px 0;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -123,14 +123,14 @@ nav ul li a.active {
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.3;
-    color: #1e293b;
+    color: #0c4a6e;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .hero-content p {
     font-size: 1.2rem;
     margin-bottom: 30px;
-    color: #475569;
+    color: #334155;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -151,7 +151,7 @@ nav ul li a.active {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 15px;
-    color: #2d3748;
+    color: #0c4a6e;
     font-weight: 700;
 }
 
@@ -159,7 +159,7 @@ nav ul li a.active {
     text-align: center;
     max-width: 700px;
     margin: 0 auto 40px;
-    color: #4b5563;
+    color: #64748b;
     font-size: 1.1rem;
 }
 
@@ -171,7 +171,7 @@ nav ul li a.active {
 }
 
 .filter-btn {
-    background-color: #f3f4f6;
+    background-color: #f1f5f9;
     border: none;
     padding: 10px 22px;
     margin: 0 5px 10px;
@@ -180,16 +180,16 @@ nav ul li a.active {
     font-family: 'Tajawal', sans-serif;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    color: #4b5563;
+    color: #64748b;
     font-weight: 500;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background-color: #2563eb;
+    background-color: #0ea5e9;
     color: #ffffff;
-    box-shadow: 0 3px 6px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 3px 6px rgba(14, 165, 233, 0.2);
 }
 
 .logos-container {
@@ -212,7 +212,8 @@ nav ul li a.active {
 
 .logo-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.2);
 }
 
 .logo-img {
@@ -225,32 +226,34 @@ nav ul li a.active {
 .logo-name {
     font-weight: 500;
     margin-bottom: 10px;
+    color: #334155;
 }
 
 .download-btn {
     display: inline-block;
-    background-color: #2563eb;
+    background-color: #0ea5e9;
     color: #ffffff;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.95rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.15);
     font-weight: 600;
     border: none;
     cursor: pointer;
 }
 
 .download-btn:hover {
-    background-color: #1e40af;
+    background-color: #0284c7;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
+    box-shadow: 0 4px 8px rgba(2, 132, 199, 0.3);
 }
 
 /* تنسيق قسم الأدوات */
 .tools-section {
     padding: 80px 0;
+    background-color: #f0f9ff;
 }
 
 .tools-container {
@@ -265,30 +268,32 @@ nav ul li a.active {
     border-radius: 12px;
     padding: 30px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .tool-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 25px rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.1);
 }
 
 .tool-icon {
     font-size: 3rem;
     margin-bottom: 20px;
+    color: #0ea5e9;
 }
 
 .tool-title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 15px;
-    color: #2d3748;
+    color: #0c4a6e;
 }
 
 .tool-desc {
-    color: #4b5563;
+    color: #64748b;
     margin-bottom: 25px;
     line-height: 1.6;
 }
@@ -299,8 +304,8 @@ nav ul li a.active {
 
 /* تنسيق الفوتر */
 footer {
-    background-color: #1e3a8a;
-    color: #ffffff;
+    background-color: #0c4a6e;
+    color: #f0f9ff;
     padding: 25px 0;
     text-align: center;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -316,13 +321,13 @@ footer p {
 }
 
 .developer {
-    color: #93c5fd;
+    color: #7dd3fc;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .developer:hover {
-    color: #dbeafe;
+    color: #bae6fd;
 }
 
 /* تجاوب الموقع مع الشاشات المختلفة */
