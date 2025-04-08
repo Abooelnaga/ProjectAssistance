@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كاتب الذكاء الاصطناعي - مرجعك</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.png">
+    <style>
+        /* تنسيقات خاصة بصفحة الذكاء الاصطناعي */
+        .ai-writer-section {
+            padding: 60px 0;
+        }
+
+        /* تنسيقات التبويبات */
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background-color: #f8fafc;
+            color: #4b5563;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            background-color: #4361ee;
+            color: #ffffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .api-key-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .api-key-container h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .api-key-container p {
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+
+        .api-key-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .api-key-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        .api-key-form input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .api-key-status {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .api-key-status.saved {
+            color: #10b981;
+        }
+
+        .api-key-status.error {
+            color: #ef4444;
+        }
+
+        .ai-writer-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .ai-writer-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .form-group select,
+        .form-group textarea,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus,
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .ai-response {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .ai-response h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-response-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            color: #4b5563;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: none;
+            color: #4361ee;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            color: #3a0ca3;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(67, 97, 238, 0.3);
+            border-radius: 50%;
+            border-top-color: #4361ee;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* تنسيقات قسم الدردشة */
+        .chat-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            scrollbar-width: thin;
+            scrollbar-color: #4361ee #f8fafc;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f8fafc;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #4361ee;
+            border-radius: 4px;
+            border: 2px solid #f8fafc;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .message:hover {
+            transform: translateY(-2px);
+        }
+
+        .user-message {
+            background-color: #4361ee;
+            color: #ffffff;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+            position: relative;
+        }
+
+        .user-message::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: #4361ee;
+            clip-path: polygon(0 0, 0% 100%, 100% 100%);
+        }
+
+        .ai-message {
+            background-color: #e2e8f0;
+            color: #4b5563;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+            position: relative;
+        }
+
+        .ai-message::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: #e2e8f0;
+            clip-path: polygon(0 100%, 100% 100%, 100% 0);
+        }
+
+        .ai-message-content {
+            padding-left: 25px;
+        }
+
+        .message-copy-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: transparent;
+            border: none;
+            color: #4361ee;
+            cursor: pointer;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-copy-btn:hover {
+            opacity: 1;
+        }
+
+        .chat-input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            min-height: 45px;
+            margin: 0;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        #response-language {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            color: #4b5563;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            min-width: 120px;
+        }
+
+        #response-language:hover,
+        #response-language:focus {
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        #send-message {
+            padding: 12px 24px;
+            background-color: #4361ee;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-message:hover {
+            background-color: #3651d1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>مرجعك</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="tools.html">أدوات الموقع</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="ai-writer-section">
+        <div class="container">
+            <h2 class="section-title">كاتب الذكاء الاصطناعي</h2>
+            <p class="section-desc">استخدم الذكاء الاصطناعي لمساعدتك في كتابة أجزاء مشروع التخرج أو الدردشة الحرة</p>
+
+            <div class="api-key-container">
+                <h3>مفتاح API من Gemini</h3>
+                <p>للاستفادة من هذه الخدمة، يرجى إدخال مفتاح API الخاص بك من Gemini. سيتم حفظ المفتاح على جهازك فقط ولن
+                    يتم مشاركته مع أي طرف آخر.</p>
+                <div class="api-key-form">
+                    <input type="text" id="api-key" placeholder="أدخل مفتاح API الخاص بك هنا...">
+                    <button class="btn" id="save-api-key">حفظ</button>
+                </div>
+                <div class="api-key-status" id="api-key-status"></div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="sections">كتابة الأقسام الأكاديمية</button>
+                <button class="tab-btn" data-tab="chat">الدردشة مع الذكاء الاصطناعي</button>
+            </div>
+
+            <div id="sections-tab" class="tab-content active">
+                <div class="ai-writer-container">
+                    <form class="ai-writer-form" id="ai-writer-form">
+                        <div class="form-group">
+                            <label for="section-type">نوع القسم</label>
+                            <input type="text" id="section-type" placeholder="اكتب نوع القسم الذي تريده..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">وصف مختصر للقسم</label>
+                            <textarea id="description" placeholder="اشرح بإيجاز ما تريد أن يتضمنه هذا القسم..."
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn" id="generate-btn">إنشاء المحتوى</button>
+                    </form>
+
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <p>جاري إنشاء المحتوى...</p>
+                    </div>
+
+                    <div class="error-message" id="error-message"></div>
+
+                    <div class="ai-response" id="ai-response">
+                        <h3>
+                            <span>الرد من الذكاء الاصطناعي</span>
+                            <button class="copy-btn" id="copy-btn">نسخ النص</button>
+                        </h3>
+                        <div class="ai-response-content" id="ai-response-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chat-tab" class="tab-content">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message ai-message">مرحباً! كيف يمكنني مساعدتك اليوم؟</div>
+                    </div>
+                    <div class="loading" id="chat-loading">
+                        <div class="loading-spinner"></div>
+                        <p>جاري التفكير...</p>
+                    </div>
+                    <div class="error-message" id="chat-error-message"></div>
+                    <div class="chat-input-container">
+                        <div class="language-selector" style="margin-bottom: 15px;">
+                            <label for="response-language"
+                                style="display: inline-block; margin-left: 10px; font-weight: 500;">لغة الرد:</label>
+                            <select id="response-language"
+                                style="padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                <option value="arabic">العربية</option>
+                                <option value="english">الإنجليزية</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <textarea class="chat-input" id="chat-input" placeholder="اكتب رسالتك هنا..."
+                                style="flex: 1; min-height: 50px; padding: 12px 15px; border-radius: 6px; border: 1px solid #e2e8f0;"></textarea>
+                            <button class="btn" id="send-chat-btn" style="height: 50px; width: 100px;">إرسال</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; <span id="year"></span> | تم التطوير بواسطة <span
+                    class="developer">Aboelnaga</span></p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // التحقق من وجود مفتاح API محفوظ
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedApiKey = localStorage.getItem('gemini_api_key');
+            if (savedApiKey) {
+                document.getElementById('api-key').value = savedApiKey;
+                document.getElementById('api-key-status').textContent = 'تم حفظ المفتاح مسبقًا';
+                document.getElementById('api-key-status').classList.add('saved');
+            }
+
+            // تحديث السنة في الفوتر
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+
+        // التبديل بين التبويبات
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // إزالة الكلاس النشط من جميع الأزرار والمحتويات
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // إضافة الكلاس النشط للزر والمحتوى المحدد
+                btn.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // حفظ مفتاح API
+        document.getElementById('save-api-key').addEventListener('click', () => {
+            const apiKey = document.getElementById('api-key').value.trim();
+            const statusElement = document.getElementById('api-key-status');
+
+            if (apiKey === '') {
+                statusElement.textContent = 'يرجى إدخال مفتاح API';
+                statusElement.classList.remove('saved');
+                statusElement.classList.add('error');
+                return;
+            }
+
+            localStorage.setItem('gemini_api_key', apiKey);
+            statusElement.textContent = 'تم حفظ المفتاح بنجاح';
+            statusElement.classList.remove('error');
+            statusElement.classList.add('saved');
+        });
+
+        // إرسال الطلب إلى Gemini API
+        document.getElementById('ai-writer-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const apiKey = localStorage.getItem('gemini_api_key');
+            if (!apiKey) {
+                document.getElementById('error-message').textContent = 'يرجى إدخال وحفظ مفتاح API أولاً';
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            const sectionType = document.getElementById('section-type').value;
+            const description = document.getElementById('description').value;
+
+            // إظهار حالة التحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('ai-response').style.display = 'none';
+
+            try {
+                // بناء الطلب إلى Gemini API
+                const prompt = `Write a ${sectionType} section for an academic project based on the following description: ${description}. The response should be well-structured, academic in tone, and in English language.`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+
+                // إخفاء حالة التحميل
+                document.getElementById('loading').style.display = 'none';
+
+                // التحقق من وجود خطأ في الاستجابة
+                if (data.error) {
+                    document.getElementById('error-message').textContent = `خطأ: ${data.error.message}`;
+                    document.getElementById('error-message').style.display = 'block';
+                    return;
+                }
+
+                // عرض الرد
+                const aiResponseText = data.candidates[0].content.parts[0].text;
+                document.getElementById('ai-response-content').textContent = aiResponseText;
+                document.getElementById('ai-response').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-message').textContent = `حدث خطأ أثناء الاتصال بالخدمة: ${error.message}`;
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+
+        // نسخ النص
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            const responseText = document.getElementById('ai-response-content').textContent;
+            navigator.clipboard.writeText(responseText).then(() => {
+                const copyBtn = document.getElementById('copy-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'تم النسخ!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // إرسال رسالة الدردشة إلى Gemini API
+        document.getElementById('send-chat-btn').addEventListener('click', async () => {
+            sendChatMessage();
+        });
+
+        // إرسال الرسالة عند الضغط على Enter
+        document.getElementById('chat-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // وظيفة إرسال رسالة الدردشة
+        async function sendChatMessage() {
+            const chatInput = document.getElementById('chat-input');
+            const userMessage = chatInput.value.trim();
+            const responseLanguage = document.getElementById('response-language').value;
+
+            if (userMessage === '') return;
+
+            const apiKey = localStorage.getItem('gemini_api_key');
+            if (!apiKey) {
+                document.getElementById('chat-error-message').textContent = 'يرجى إدخال وحفظ مفتاح API أولاً';
+                document.getElementById('chat-error-message').style.display = 'block';
+                return;
+            }
+
+            // إضافة رسالة المستخدم إلى المحادثة
+            addMessageToChat('user', userMessage);
+            chatInput.value = '';
+
+            // إظهار حالة التحميل
+            document.getElementById('chat-loading').style.display = 'block';
+            document.getElementById('chat-error-message').style.display = 'none';
+
+            try {
+                // تحديد اللغة المطلوبة للرد
+                const languageInstruction = responseLanguage === 'arabic' ?
+                    'يرجى الرد باللغة العربية على السؤال التالي: ' :
+                    'Please respond in English to the following question: ';
+
+                // بناء الطلب إلى Gemini API
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: languageInstruction + userMessage
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+
+                // إخفاء حالة التحميل
+                document.getElementById('chat-loading').style.display = 'none';
+
+                // التحقق من وجود خطأ في الاستجابة
+                if (data.error) {
+                    document.getElementById('chat-error-message').textContent = `خطأ: ${data.error.message}`;
+                    document.getElementById('chat-error-message').style.display = 'block';
+                    return;
+                }
+
+                // إضافة رد الذكاء الاصطناعي إلى المحادثة
+                const aiResponseText = data.candidates[0].content.parts[0].text;
+                addMessageToChat('ai', aiResponseText);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('chat-loading').style.display = 'none';
+                document.getElementById('chat-error-message').textContent = `حدث خطأ أثناء الاتصال بالخدمة: ${error.message}`;
+                document.getElementById('chat-error-message').style.display = 'block';
+            }
+        }
+
+        // وظيفة إضافة رسالة إلى المحادثة
+        function addMessageToChat(sender, text) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
+
+            if (sender === 'ai') {
+                // إنشاء حاوية للمحتوى لإضافة زر النسخ
+                const contentDiv = document.createElement('div');
+                contentDiv.classList.add('ai-message-content');
+                contentDiv.textContent = text;
+
+                // إنشاء زر النسخ
+                const copyBtn = document.createElement('button');
+                copyBtn.classList.add('message-copy-btn');
+                copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>';
+                copyBtn.title = 'نسخ النص';
+
+                // إضافة وظيفة النسخ
+                copyBtn.addEventListener('click', function () {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalHTML = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalHTML;
+                        }, 2000);
+                    });
+                });
+
+                messageDiv.appendChild(copyBtn);
+                messageDiv.appendChild(contentDiv);
+            } else {
+                messageDiv.textContent = text;
+            }
+
+            chatMessages.appendChild(messageDiv);
+
+            // التمرير إلى أسفل المحادثة
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
+
+</html>

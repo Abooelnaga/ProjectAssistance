@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن الصور - مرجعك</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.png">
+    <style>
+        .image-search-section {
+            padding: 60px 0;
+        }
+
+        @media (max-width: 768px) {
+            .image-search-section {
+                padding: 40px 0;
+            }
+        }
+
+        .search-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        @media (max-width: 576px) {
+            .search-container {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .search-form {
+                flex-direction: column;
+            }
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 576px) {
+            .search-input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        .source-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .source-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        .image-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-container {
+            position: relative;
+            padding-top: 75%;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-info {
+            padding: 15px;
+        }
+
+        @media (max-width: 576px) {
+            .image-info {
+                padding: 10px;
+            }
+        }
+
+        .image-source {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .image-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            background-color: #4361ee;
+            color: #ffffff;
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        @media (max-width: 576px) {
+            .download-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .download-btn:hover {
+            background-color: #3651d1;
+        }
+
+        .source-link {
+            color: #4b5563;
+            margin-right: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .source-link:hover {
+            color: #4361ee;
+        }
+
+        .photographer-info {
+            font-size: 0.8rem;
+            padding: 0 15px 15px;
+            color: #6b7280;
+        }
+
+        .photographer-info a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .photographer-info a:hover {
+            color: #4361ee;
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(67, 97, 238, 0.3);
+            border-radius: 50%;
+            border-top-color: #4361ee;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .translated-text {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4b5563;
+            background-color: #f3f4f6;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #ef4444;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* تم إزالة تنسيقات الفوتر المضمنة واستبدالها بالاعتماد على ملف style.css */
+        footer {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>مرجعك</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="tools.html">أدوات الموقع</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="image-search-section">
+        <div class="container">
+            <h2 class="section-title">البحث عن الصور</h2>
+            <p class="section-desc">ابحث عن الصور في مواقع مختلفة وقم بتنزيلها بسهولة</p>
+
+            <div class="search-container">
+                <form class="search-form" id="search-form">
+                    <input type="text" class="search-input" id="search-input" placeholder="اكتب ما تبحث عنه بالعربي..."
+                        required>
+                    <button type="submit" class="btn">بحث</button>
+                </form>
+
+                <div class="translated-text" id="translated-text">تم البحث عن: <span id="english-query"></span></div>
+
+                <div class="source-selector">
+                    <div class="source-option">
+                        <input type="checkbox" id="pexels" name="source" value="pexels" checked>
+                        <label for="pexels">Pexels</label>
+                    </div>
+                    <div class="source-option" style="display: none;">
+                        <input type="checkbox" id="unsplash" name="source" value="unsplash">
+                        <label for="unsplash">Unsplash</label>
+                    </div>
+                    <div class="source-option" style="display: none;">
+                        <input type="checkbox" id="pixabay" name="source" value="pixabay">
+                        <label for="pixabay">Pixabay</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>جاري البحث...</p>
+            </div>
+
+            <div class="error-message" id="error-message"></div>
+
+            <div class="results-grid" id="results-grid"></div>
+
+            <div class="load-more-container" id="load-more-container"
+                style="display: none; text-align: center; margin: 30px 0;">
+                <button id="load-more-btn" class="btn">عرض المزيد</button>
+                <p id="no-more-results" style="display: none; color: #6b7280; margin-top: 15px;">لا توجد المزيد من الصور
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; <span id="year"></span> | تم التطوير بواسطة <span
+                    class="developer">Aboelnaga</span></p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // تحديث السنة في الفوتر
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('error-message');
+            const resultsGrid = document.getElementById('results-grid');
+            const translatedText = document.getElementById('translated-text');
+            const englishQuery = document.getElementById('english-query');
+
+            // متغيرات عالمية لتتبع البحث
+            let currentPage = 1;
+            let currentQuery = '';
+            let totalPages = 0;
+            let isLoading = false;
+
+            // دالة الترجمة من العربية للإنجليزية
+            async function translateToEnglish(arabicText) {
+                try {
+                    // API الترجمة من جوجل (هنا نستخدم طريقة مبسطة)
+                    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ar&tl=en&dt=t&q=${encodeURIComponent(arabicText)}`;
+
+                    try {
+                        // محاولة استخدام API جوجل للترجمة
+                        const response = await axios.get(apiUrl);
+                        if (response.data && response.data[0] && response.data[0][0]) {
+                            const translatedText = response.data[0][0][0];
+                            console.log("تمت الترجمة عبر Google API:", translatedText);
+                            return translatedText;
+                        }
+                    } catch (apiError) {
+                        console.log("فشل استخدام Google API، سيتم استخدام الترجمة المحلية");
+                        // إذا فشلت الترجمة عبر API، سنستخدم الترجمة المحلية
+                    }
+
+                    // قاموس موسع للكلمات العربية الشائعة (كاحتياطي)
+                    const arabicToEnglish = {
+                        'طبيعة': 'nature',
+                        'سيارة': 'car',
+                        'سيارات': 'cars',
+                        'منزل': 'house',
+                        'بيت': 'home',
+                        'حيوان': 'animal',
+                        'حيوانات': 'animals',
+                        'طعام': 'food',
+                        'ماء': 'water',
+                        'بحر': 'sea',
+                        'شاطئ': 'beach',
+                        'جبل': 'mountain',
+                        'جبال': 'mountains',
+                        'سماء': 'sky',
+                        'شمس': 'sun',
+                        'قمر': 'moon',
+                        'نجوم': 'stars',
+                        'شجرة': 'tree',
+                        'أشجار': 'trees',
+                        'زهرة': 'flower',
+                        'زهور': 'flowers',
+                        'انسان': 'human',
+                        'رجل': 'man',
+                        'امرأة': 'woman',
+                        'طفل': 'child',
+                        'أطفال': 'children',
+                        'تكنولوجيا': 'technology',
+                        'حاسوب': 'computer',
+                        'هاتف': 'phone',
+                        'موبايل': 'mobile',
+                        'رياضة': 'sport',
+                        'كرة': 'ball',
+                        'كرة قدم': 'football',
+                        'كرة سلة': 'basketball',
+                        'مدينة': 'city',
+                        'قرية': 'village',
+                        'حب': 'love',
+                        'سعادة': 'happiness',
+                        'حزن': 'sadness',
+                        'مدرسة': 'school',
+                        'جامعة': 'university',
+                        'كتاب': 'book',
+                        'كتب': 'books',
+                        'مكتبة': 'library',
+                        'طالب': 'student',
+                        'معلم': 'teacher',
+                        'طبيب': 'doctor',
+                        'مستشفى': 'hospital',
+                        'صيدلية': 'pharmacy',
+                        'دواء': 'medicine',
+                        'مرض': 'disease',
+                        'صحة': 'health',
+                        'رياضي': 'athlete',
+                        'موسيقى': 'music',
+                        'فن': 'art',
+                        'لوحة': 'painting',
+                        'فنان': 'artist',
+                        'ممثل': 'actor',
+                        'ممثلة': 'actress',
+                        'فيلم': 'movie',
+                        'أفلام': 'movies',
+                        'سينما': 'cinema',
+                        'تلفزيون': 'television',
+                        'راديو': 'radio',
+                        'انترنت': 'internet',
+                        'حاسب': 'computer',
+                        'لابتوب': 'laptop',
+                        'هاتف ذكي': 'smartphone',
+                        'تطبيق': 'application',
+                        'برنامج': 'program',
+                        'شبكة': 'network',
+                        'عمل': 'work',
+                        'وظيفة': 'job',
+                        'شركة': 'company',
+                        'مكتب': 'office',
+                        'اجتماع': 'meeting',
+                        'فريق': 'team',
+                        'مدير': 'manager',
+                        'قائد': 'leader',
+                        'موظف': 'employee',
+                        'زملاء': 'colleagues',
+                        'راتب': 'salary',
+                        'عطلة': 'vacation',
+                        'سفر': 'travel',
+                        'سياحة': 'tourism',
+                        'فندق': 'hotel',
+                        'مطعم': 'restaurant',
+                        'وجبة': 'meal',
+                        'إفطار': 'breakfast',
+                        'غداء': 'lunch',
+                        'عشاء': 'dinner',
+                        'قهوة': 'coffee',
+                        'شاي': 'tea',
+                        'عصير': 'juice',
+                        'حلويات': 'sweets',
+                        'فاكهة': 'fruit',
+                        'فواكه': 'fruits',
+                        'خضروات': 'vegetables',
+                        'لحم': 'meat',
+                        'دجاج': 'chicken',
+                        'سمك': 'fish',
+                        'خبز': 'bread',
+                        'أرز': 'rice',
+                        'معكرونة': 'pasta',
+                        'قط': 'cat',
+                        'قطة': 'cat',
+                        'كلب': 'dog',
+                        'أسد': 'lion',
+                        'نمر': 'tiger',
+                        'فيل': 'elephant',
+                        'زرافة': 'giraffe',
+                        'قرد': 'monkey',
+                        'دب': 'bear',
+                        'ثعلب': 'fox',
+                        'ذئب': 'wolf',
+                        'غزال': 'deer',
+                        'حصان': 'horse',
+                        'فرس': 'horse',
+                        'بقرة': 'cow',
+                        'خروف': 'sheep',
+                        'دجاجة': 'chicken',
+                        'ديك': 'rooster',
+                        'بطة': 'duck',
+                        'عصفور': 'bird',
+                        'نسر': 'eagle',
+                        'سمكة': 'fish',
+                        'حوت': 'whale',
+                        'دلفين': 'dolphin',
+                        'سلحفاة': 'turtle',
+                        'أبيض': 'white',
+                        'أسود': 'black',
+                        'أحمر': 'red',
+                        'أزرق': 'blue',
+                        'أخضر': 'green',
+                        'أصفر': 'yellow',
+                        'برتقالي': 'orange',
+                        'بنفسجي': 'purple',
+                        'وردي': 'pink',
+                        'بني': 'brown',
+                        'رمادي': 'gray',
+                        'ذهبي': 'gold',
+                        'فضي': 'silver',
+                        'جميلة': 'beautiful',
+                        'جميل': 'beautiful',
+                        'كبير': 'large',
+                        'صغير': 'small',
+                        'قديم': 'old',
+                        'جديد': 'new',
+                        'واقعي': 'realistic',
+                        'رسم': 'drawing',
+                        'تصميم': 'design',
+                        'صورة': 'picture',
+                        'صور': 'photos',
+                        'ناس': 'people',
+                        'شخص': 'person',
+                        'رجال': 'men',
+                        'نساء': 'women',
+                        'عائلة': 'family',
+                        'أصدقاء': 'friends',
+                        'هندسة': 'engineering',
+                        'علوم': 'science',
+                        'رياضيات': 'mathematics',
+                        'كمبيوتر': 'computer',
+                        'برمجة': 'programming',
+                        'عربية': 'arabic',
+                        'إنجليزية': 'english'
+                    };
+
+                    // تقسيم النص إلى كلمات
+                    const words = arabicText.split(' ');
+                    let allTranslated = true;
+
+                    // ترجمة كل كلمة
+                    const translatedWords = words.map(word => {
+                        // إزالة علامات الترقيم للبحث في القاموس
+                        const cleanWord = word.replace(/[^\u0600-\u06FF]/g, '');
+                        if (cleanWord && !arabicToEnglish[cleanWord]) {
+                            allTranslated = false;
+                        }
+                        return arabicToEnglish[cleanWord] || cleanWord;
+                    });
+
+                    // إذا تم ترجمة جميع الكلمات، استخدم الترجمة
+                    if (allTranslated && translatedWords.some(word => word.length > 0)) {
+                        const translation = translatedWords.filter(word => word.length > 0).join(' ');
+                        console.log("تمت الترجمة بنجاح:", translation);
+                        // إضافة كلمة image للحصول على نتائج أفضل
+                        return translation + " image";
+                    }
+
+                    // إذا لم يتم ترجمة بعض الكلمات، ابحث عن كلمات مفتاحية في النص
+                    const keywordTranslation = findKeywordTranslation(arabicText);
+                    if (keywordTranslation) {
+                        console.log("تم العثور على ترجمة بالكلمات المفتاحية:", keywordTranslation);
+                        return keywordTranslation;
+                    }
+
+                    // محاولة أخيرة - استخدام LibreTranslate API
+                    try {
+                        const libreTranslateUrl = "https://libretranslate.de/translate";
+                        const libreTranslateResponse = await axios.post(libreTranslateUrl, {
+                            q: arabicText,
+                            source: "ar",
+                            target: "en"
+                        }, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (libreTranslateResponse.data && libreTranslateResponse.data.translatedText) {
+                            const libreResult = libreTranslateResponse.data.translatedText;
+                            console.log("تمت الترجمة عبر LibreTranslate:", libreResult);
+                            return libreResult + " image";
+                        }
+                    } catch (libreError) {
+                        console.error("فشل استخدام LibreTranslate:", libreError);
+                    }
+
+                    // إذا وصلنا إلى هنا، فكل محاولات الترجمة قد فشلت
+                    // ترجمة بسيطة - كلمات متكررة في البحث عن الصور
+                    return "beautiful " + arabicText;
+
+                } catch (error) {
+                    console.error('خطأ في الترجمة:', error);
+                    // في حالة فشل كل محاولات الترجمة، أضف كلمة للحصول على نتائج صور على الأقل
+                    return arabicText + " image";
+                }
+            }
+
+            // دالة للبحث عن كلمات مفتاحية في النص
+            function findKeywordTranslation(text) {
+                const keywordMap = {
+                    'طبيعة': 'nature landscape beautiful',
+                    'حيوان': 'animal',
+                    'حيوانات': 'animals wildlife',
+                    'طعام': 'food delicious',
+                    'تكنولوجيا': 'technology modern',
+                    'رياضة': 'sports athletic',
+                    'سفر': 'travel journey vacation',
+                    'فن': 'art creative artwork',
+                    'موسيقى': 'music instrument concert',
+                    'تعليم': 'education learning school',
+                    'صحة': 'health wellness medical',
+                    'عمل': 'business work office',
+                    'منزل': 'home house interior',
+                    'مدينة': 'city urban cityscape',
+                    'أزياء': 'fashion style clothing',
+                    'سيارات': 'cars auto vehicles',
+                    'حديقة': 'garden park flowers',
+                    'طبخ': 'cooking food kitchen',
+                    'كتب': 'books reading library',
+                    'شاطئ': 'beach ocean coast',
+                    'جبال': 'mountains landscape scenic',
+                    'قطط': 'cats kittens',
+                    'كلاب': 'dogs puppies',
+                    'أطفال': 'children kids baby',
+                    'رجال': 'men male',
+                    'نساء': 'women female',
+                    'شهرة': 'celebrities famous',
+                    'رياضيون': 'athletes sports',
+                    'ممثلين': 'actors acting',
+                    'غناء': 'singing concert',
+                    'رقص': 'dancing dance',
+                    'معمار': 'architecture buildings',
+                    'تاريخ': 'history historical',
+                    'أثار': 'archaeology ancient',
+                    'علوم': 'science scientific',
+                    'فضاء': 'space cosmos astronomy',
+                    'طب': 'medicine medical',
+                    'رياضيات': 'mathematics math',
+                    'فيزياء': 'physics',
+                    'كيمياء': 'chemistry',
+                    'أحياء': 'biology'
+                };
+
+                for (const [keyword, translation] of Object.entries(keywordMap)) {
+                    if (text.includes(keyword)) {
+                        return translation;
+                    }
+                }
+
+                return null;
+            }
+
+            // دالة البحث عن الصور
+            async function searchImages(query, sources, page = 1, isNewSearch = true) {
+                const results = [];
+                const originalQuery = query; // احتفظ بالاستعلام الأصلي
+
+                try {
+                    let totalResults = 0;
+
+                    // البحث في Pexels (المصدر الرئيسي)
+                    if (sources.includes('pexels')) {
+                        try {
+                            const pexelsApiKey = 'VRjdlNc37M1G6rf7IT8kmbTdh4oWirtdDO4lKq0eokiEgyxcug7nminK'; // تم تحديث مفتاح API
+
+                            // زيادة عدد النتائج من Pexels لأنه المصدر الرئيسي
+                            const pexelsResponse = await axios.get(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=15&page=${page}&locale=ar-AR`, {
+                                headers: {
+                                    'Authorization': pexelsApiKey
+                                }
+                            });
+
+                            if (pexelsResponse.data) {
+                                // تحديث إجمالي عدد الصفحات المتاحة
+                                if (isNewSearch && pexelsResponse.data.total_results) {
+                                    totalPages = Math.ceil(pexelsResponse.data.total_results / 15);
+                                    console.log(`إجمالي الصفحات: ${totalPages}, إجمالي النتائج: ${pexelsResponse.data.total_results}`);
+
+                                    // تأكد من أن هناك على الأقل صفحتين لإظهار زر عرض المزيد
+                                    if (totalPages < 2) {
+                                        totalPages = 2; // تعيين قيمة افتراضية للتأكد من ظهور الزر
+                                    }
+                                }
+
+                                if (pexelsResponse.data.photos && pexelsResponse.data.photos.length > 0) {
+                                    totalResults += pexelsResponse.data.photos.length;
+                                    pexelsResponse.data.photos.forEach(photo => {
+                                        results.push({
+                                            source: 'Pexels',
+                                            thumbnail: photo.src.medium,
+                                            downloadUrl: photo.src.original,
+                                            title: `${originalQuery} - ${photo.photographer}`,
+                                            url: photo.url, // رابط الصورة على موقع Pexels
+                                            photographer: photo.photographer,
+                                            photographer_url: photo.photographer_url
+                                        });
+                                    });
+                                }
+                            }
+
+                            // إذا لم يتم العثور على نتائج كافية وكان هذا بحثًا جديدًا، جرّب استعلامًا آخر
+                            if (isNewSearch && results.length < 5) {
+                                // محاولة ثانية بتنوع أكبر في الكلمات المفتاحية
+                                const enhancedQuery = query + " photo";
+                                const secondPexelsResponse = await axios.get(`https://api.pexels.com/v1/search?query=${encodeURIComponent(enhancedQuery)}&per_page=15`, {
+                                    headers: {
+                                        'Authorization': pexelsApiKey
+                                    }
+                                });
+
+                                if (secondPexelsResponse.data && secondPexelsResponse.data.photos) {
+                                    totalResults += secondPexelsResponse.data.photos.length;
+                                    secondPexelsResponse.data.photos.forEach(photo => {
+                                        // تجنب تكرار نفس الصور
+                                        if (!results.some(r => r.downloadUrl === photo.src.original)) {
+                                            results.push({
+                                                source: 'Pexels',
+                                                thumbnail: photo.src.medium,
+                                                downloadUrl: photo.src.original,
+                                                title: `${originalQuery} - ${photo.photographer}`,
+                                                url: photo.url,
+                                                photographer: photo.photographer,
+                                                photographer_url: photo.photographer_url
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+
+                            // محاولة البحث في صور المحررين المختارة إذا كانت النتائج قليلة وكان هذا بحثًا جديدًا
+                            if (isNewSearch && results.length < 10) {
+                                try {
+                                    const curatedResponse = await axios.get(`https://api.pexels.com/v1/curated?per_page=10`, {
+                                        headers: {
+                                            'Authorization': pexelsApiKey
+                                        }
+                                    });
+
+                                    if (curatedResponse.data && curatedResponse.data.photos) {
+                                        curatedResponse.data.photos.forEach(photo => {
+                                            if (!results.some(r => r.downloadUrl === photo.src.original)) {
+                                                results.push({
+                                                    source: 'Pexels مختارات',
+                                                    thumbnail: photo.src.medium,
+                                                    downloadUrl: photo.src.original,
+                                                    title: `مختارات - ${photo.photographer}`,
+                                                    url: photo.url,
+                                                    photographer: photo.photographer,
+                                                    photographer_url: photo.photographer_url
+                                                });
+                                            }
+                                        });
+                                    }
+                                } catch (error) {
+                                    console.error('خطأ في جلب الصور المختارة من Pexels:', error);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('خطأ في جلب صور من Pexels:', error);
+                        }
+                    }
+
+                    console.log(`تم العثور على ${totalResults} نتيجة للاستعلام: ${query} (الصفحة ${page})`);
+
+                    // في حال لم يتم العثور على نتائج من أي مصدر وكان هذا بحثًا جديدًا
+                    if (isNewSearch && results.length === 0) {
+                        console.log("لم يتم العثور على نتائج، جاري جلب صور عشوائية من Pexels...");
+                        try {
+                            const pexelsApiKey = 'VRjdlNc37M1G6rf7IT8kmbTdh4oWirtdDO4lKq0eokiEgyxcug7nminK';
+                            const randomResponse = await axios.get(`https://api.pexels.com/v1/curated?per_page=15`, {
+                                headers: {
+                                    'Authorization': pexelsApiKey
+                                }
+                            });
+
+                            if (randomResponse.data && randomResponse.data.photos) {
+                                // تعيين عدد الصفحات لصور المحررين المختارة
+                                if (isNewSearch) {
+                                    totalPages = 3; // نفترض أن هناك 3 صفحات على الأقل من الصور المختارة
+                                }
+
+                                randomResponse.data.photos.forEach(photo => {
+                                    results.push({
+                                        source: 'Pexels مختارات',
+                                        thumbnail: photo.src.medium,
+                                        downloadUrl: photo.src.original,
+                                        title: `${originalQuery} - ${photo.photographer}`,
+                                        url: photo.url,
+                                        photographer: photo.photographer,
+                                        photographer_url: photo.photographer_url
+                                    });
+                                });
+                            }
+                        } catch (error) {
+                            console.error('خطأ في جلب الصور العشوائية من Pexels:', error);
+
+                            // إذا فشلت محاولة Pexels، استخدم صور Lorem Picsum كاحتياطي نهائي
+                            for (let i = 1; i <= 15; i++) {
+                                const randomId = Math.floor(Math.random() * 1000);
+                                results.push({
+                                    source: 'Web',
+                                    thumbnail: `https://picsum.photos/id/${randomId}/300/200`,
+                                    downloadUrl: `https://picsum.photos/id/${randomId}/800/600`,
+                                    title: `${originalQuery} - صورة ${i}`,
+                                    url: `https://picsum.photos/id/${randomId}/800/600`,
+                                    photographer: 'Lorem Picsum',
+                                    photographer_url: 'https://picsum.photos'
+                                });
+                            }
+
+                            // تعيين عدد الصفحات للصور العشوائية
+                            if (isNewSearch) {
+                                totalPages = 3; // نفترض أن هناك 3 صفحات على الأقل من الصور العشوائية
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('خطأ في البحث عن الصور:', error);
+                }
+
+                return results;
+            }
+
+            // عرض الصور في الصفحة
+            function displayImages(results, clearExisting = true) {
+                // حذف النتائج السابقة إذا كانت بحثًا جديدًا
+                if (clearExisting) {
+                    resultsGrid.innerHTML = '';
+                }
+
+                if (results.length === 0) {
+                    errorMessage.textContent = 'لم يتم العثور على نتائج. يرجى تجربة كلمات بحث أخرى.';
+                    errorMessage.style.display = 'block';
+                    document.getElementById('load-more-container').style.display = 'none';
+                } else {
+                    results.forEach(result => {
+                        const card = document.createElement('div');
+                        card.className = 'image-card';
+                        card.innerHTML = `                            <div class="image-container">
+                                <img src="${result.thumbnail}" alt="${result.title}" loading="lazy">
+                            </div>
+                            <div class="image-info">
+                                <div class="image-source">${result.source}</div>
+                                <div class="image-actions">
+                                    <a href="${result.url || result.downloadUrl}" target="_blank" class="source-link" title="مشاهدة على الموقع الأصلي">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                            <path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                        </svg>
+                                    </a>
+                                    <button class="download-btn" onclick="window.open('${result.downloadUrl}', '_blank')">تنزيل</button>
+                                </div>
+                            </div>
+                            <div class="photographer-info">
+                                <a href="${result.photographer_url || '#'}" target="_blank">${result.photographer || ''}</a>
+                            </div>
+                        `;
+                        resultsGrid.appendChild(card);
+                    });
+
+                    // دائماً أظهر زر "عرض المزيد" عند وجود نتائج
+                    const loadMoreContainer = document.getElementById('load-more-container');
+                    const loadMoreBtn = document.getElementById('load-more-btn');
+                    const noMoreResults = document.getElementById('no-more-results');
+
+                    loadMoreContainer.style.display = 'block';
+
+                    // تحقق مما إذا كنا وصلنا إلى آخر صفحة
+                    if (currentPage >= totalPages) {
+                        loadMoreBtn.style.display = 'none';
+                        noMoreResults.style.display = 'block';
+                    } else {
+                        loadMoreBtn.style.display = 'inline-block';
+                        noMoreResults.style.display = 'none';
+                    }
+                }
+            }
+
+            // إضافة حدث النقر على زر "عرض المزيد"
+            document.getElementById('load-more-btn').addEventListener('click', async () => {
+                if (isLoading || currentPage >= totalPages) return;
+
+                isLoading = true;
+                document.getElementById('load-more-btn').textContent = 'جاري التحميل...';
+
+                currentPage++;
+                const moreResults = await searchImages(currentQuery, ['pexels'], currentPage, false);
+
+                displayImages(moreResults, false);
+
+                isLoading = false;
+                document.getElementById('load-more-btn').textContent = 'عرض المزيد';
+            });
+
+            searchForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const arabicQuery = searchInput.value.trim();
+                if (arabicQuery === '') return;
+
+                // إجبار البحث في Pexels فقط
+                const selectedSources = ['pexels'];
+
+                // إعادة تعيين متغيرات البحث
+                currentPage = 1;
+                totalPages = 0;
+
+                // إظهار حالة التحميل
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                resultsGrid.innerHTML = '';
+                translatedText.style.display = 'none';
+                document.getElementById('load-more-container').style.display = 'none';
+
+                try {
+                    // ترجمة النص من العربية للإنجليزية
+                    const englishQueryText = await translateToEnglish(arabicQuery);
+                    currentQuery = englishQueryText; // حفظ الاستعلام الحالي
+
+                    // عرض النص المترجم
+                    englishQuery.textContent = englishQueryText;
+                    translatedText.style.display = 'block';
+
+                    // البحث عن الصور باستخدام النص المترجم
+                    const results = await searchImages(englishQueryText, selectedSources);
+
+                    // عرض النتائج
+                    displayImages(results);
+                } catch (error) {
+                    console.error('Error during search:', error);
+                    errorMessage.textContent = 'حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.';
+                    errorMessage.style.display = 'block';
+                } finally {
+                    loading.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
